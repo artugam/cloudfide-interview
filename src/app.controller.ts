@@ -6,8 +6,12 @@ export class AppController {
   constructor(protected readonly binanceService: BinanceService) {}
 
   @Get()
-  getHello(): Promise<any> {
-    //TODO any
-    return this.binanceService.fetchTrades();
+  async analyzePrice(): Promise<any> {
+    return this.binanceService.fetchHistoricalData({
+      symbol: 'BTCUSDT',
+      startTime: 1730419200000,
+      endTime: 1731801600000,
+      interval: '1h',
+    });
   }
 }
