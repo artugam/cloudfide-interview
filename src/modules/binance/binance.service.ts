@@ -8,7 +8,7 @@ export class BinanceService implements IBinanceService {
   protected readonly client: MainClient;
   constructor() {
     this.client = new MainClient({
-      baseUrl: 'https://api.binance.com',
+      baseUrl: 'https://api.binance.com', //Could be .env value
     });
   }
 
@@ -21,7 +21,7 @@ export class BinanceService implements IBinanceService {
         endTime: args.endTime,
       })
       .catch((e) => {
-        console.error(e);
+        console.error(e); //I would create here a more generic request inteceptor for logging and error handling purpose
         return [];
       });
   }
