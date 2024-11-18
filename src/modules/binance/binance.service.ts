@@ -13,11 +13,16 @@ export class BinanceService implements IBinanceService {
   }
 
   async fetchKlines(args: KlinesParams): Promise<Kline[]> {
-    return this.client.getKlines({
-      symbol: args.symbol,
-      interval: args.interval,
-      startTime: args.startTime,
-      endTime: args.endTime,
-    });
+    return this.client
+      .getKlines({
+        symbol: args.symbol,
+        interval: args.interval,
+        startTime: args.startTime,
+        endTime: args.endTime,
+      })
+      .catch((e) => {
+        console.error(e);
+        return [];
+      });
   }
 }
