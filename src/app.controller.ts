@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { BinanceService } from './modules/binance/binance.service';
 import Big from 'big.js';
+import { AnalysisQueryParams } from './analysis.query-params';
 
 type ResponseType = {
   items: Array<{
@@ -21,12 +22,14 @@ export class AppController {
   constructor(protected readonly binanceService: BinanceService) {}
 
   @Get()
-  async analyzePrice(): Promise<ResponseType> {
+  async analyzePrice(
+    @Query() query: AnalysisQueryParams,
+  ): Promise<ResponseType> {
     const result = await this.binanceService.fetchKlines({
-      symbol: 'BTCUSDT',
-      startTime: 1730419200000,
-      endTime: 1731801600000,
-      interval: '1h',
+      symbol: query.symbol,
+      startTime: query.startTime,
+      endTime: query.endTime,
+      interval: query.interval,
     });
     if (!result.length) {
       return {
