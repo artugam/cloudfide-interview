@@ -25,6 +25,7 @@ export class AppController {
   async analyzePrice(
     @Query() query: AnalysisQueryParams,
   ): Promise<ResponseType> {
+    //I would move to CQRS as separated query, but no time
     const result = await this.binanceService.fetchKlines({
       symbol: query.symbol,
       startTime: query.startTime,
