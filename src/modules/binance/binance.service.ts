@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import {
   FetchHistoricalDataParams,
+  FetchHistoricalDataResponse,
   IBinanceService,
 } from './i.binance.service';
 
@@ -9,7 +10,9 @@ import {
 export class BinanceService implements IBinanceService {
   constructor(private readonly httpService: HttpService) {}
 
-  async fetchHistoricalData(args: FetchHistoricalDataParams): Promise<any> {
+  async fetchHistoricalData(
+    args: FetchHistoricalDataParams,
+  ): Promise<FetchHistoricalDataResponse> {
     const url = `/api/v3/klines?symbol=${args.symbol}&startTime=${args.startTime}&endTime=${args.endTime}&interval=${args.interval}`;
 
     return this.httpService.axiosRef

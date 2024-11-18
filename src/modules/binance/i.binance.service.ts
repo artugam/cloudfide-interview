@@ -21,6 +21,24 @@ export type FetchHistoricalDataParams = {
     | '1M';
 };
 
+type KlineData = [
+  number, // Kline open time
+  string, // Open price
+  string, // High price
+  string, // Low price
+  string, // Close price
+  string, // Volume
+  number, // Kline Close time
+  string, // Quote asset volume
+  number, // Number of trades
+  string, // Taker buy base asset volume
+  string, // Taker buy quote asset volume
+];
+
+export type FetchHistoricalDataResponse = KlineData[][];
+
 export interface IBinanceService {
-  fetchHistoricalData(args: FetchHistoricalDataParams): Promise<any>; //TODO
+  fetchHistoricalData(
+    args: FetchHistoricalDataParams,
+  ): Promise<FetchHistoricalDataResponse>;
 }
