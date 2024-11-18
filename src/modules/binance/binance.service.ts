@@ -1,26 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import {
-  FetchHistoricalDataParams,
-  FetchHistoricalDataResponse,
-  IBinanceService,
-} from './i.binance.service';
+import { IBinanceService } from './i.binance.service';
+import { MainClient } from 'binance';
+import { Kline, KlinesParams } from 'binance/lib/types/shared';
 
 @Injectable()
 export class BinanceService implements IBinanceService {
-  constructor(private readonly httpService: HttpService) {}
+  protected readonly client: MainClient;
+  constructor() {
+    this.client = new MainClient({
+      baseUrl: 'https://api.binance.com',
+    });
+  }
 
-  async fetchHistoricalData(
-    args: FetchHistoricalDataParams,
-  ): Promise<FetchHistoricalDataResponse> {
-    const url = `/api/v3/klines?symbol=${args.symbol}&startTime=${args.startTime}&endTime=${args.endTime}&interval=${args.interval}`;
-
-    return this.httpService.axiosRef
-      .get(url)
-      .then((res) => res.data)
-      .catch((e) => {
-        console.error(e); //TODO error handling
-        throw e;
-      });
+  async fetchKlines(args: KlinesParams): Promise<Kline[]> {
+    return this.client.getKlines({
+      symbol: args.symbol,
+      interval: args.interval,
+      startTime: args.startTime,
+      endTime: args.endTime,
+    });
   }
 }

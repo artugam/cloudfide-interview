@@ -7,7 +7,7 @@ export class AppController {
 
   @Get()
   async analyzePrice(): Promise<any> {
-    return this.binanceService.fetchHistoricalData({
+    return this.binanceService.fetchKlines({
       symbol: 'BTCUSDT',
       startTime: 1730419200000,
       endTime: 1731801600000,
