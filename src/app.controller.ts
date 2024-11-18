@@ -67,8 +67,8 @@ export class AppController {
       summary: {
         firstClosePrice: String(firstPrice),
         lastClosePrice: String(lastPrice),
-        lowestClosePrice: lowestClosePrice.toString(),
-        highestClosePrice: highestClosePrice.toString(),
+        lowestClosePrice: lowestClosePrice.toFixed(8),
+        highestClosePrice: highestClosePrice.toFixed(8),
         status: new Big(firstPrice).eq(new Big(lastPrice))
           ? 'same'
           : new Big(firstPrice).gt(new Big(lastPrice))
