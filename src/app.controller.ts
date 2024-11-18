@@ -13,7 +13,7 @@ type ResponseType = {
     lastClosePrice: string;
     lowestClosePrice: string;
     highestClosePrice: string;
-    status: 'increase' | 'decrease';
+    status: 'increase' | 'decrease' | 'same';
   };
 };
 
@@ -69,9 +69,11 @@ export class AppController {
         lastClosePrice: String(lastPrice),
         lowestClosePrice: lowestClosePrice.toString(),
         highestClosePrice: highestClosePrice.toString(),
-        status: new Big(firstPrice).gt(new Big(lastPrice))
-          ? 'decrease'
-          : 'increase', //or same?
+        status: new Big(firstPrice).eq(new Big(lastPrice))
+          ? 'same'
+          : new Big(firstPrice).gt(new Big(lastPrice))
+            ? 'decrease'
+            : 'increase', //or same?
       },
       items,
     };
